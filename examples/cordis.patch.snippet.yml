@@ -1,0 +1,18 @@
+# 把这段追加到 ~/.dsh/profiles/<profile>/cordis.patch.yml 的 insert 列表里。
+#
+# 说明：
+# - name 指向本仓库里的插件文件，必须是机器上的绝对路径（Windows 用正斜杠更稳）。
+# - 插件跑在 DSH HOST 进程里，所以不受会话沙盒限制，能正常启动浏览器。
+# - promptBias: true 会额外注册一条系统提示：轻问题默认先调 ask_deepseek_web。
+# - 第一次用之前，先按 README 第 4 节在 --headed 模式下登录一次。
+# - 改完需要重启 DSH 才会加载插件。
+- insert:
+    - id: tool-deepseek-web
+      name: "/absolute/path/to/DSH-UseWebDeepseek-WhenEasyWork/src/plugin.js"
+      config:
+        toolName: ask_deepseek_web
+        port: 9555
+        # userDataDir: "%LOCALAPPDATA%/dsh-web-deepseek/profile"
+        headless: false
+        timeoutMs: 90000
+        promptBias: true

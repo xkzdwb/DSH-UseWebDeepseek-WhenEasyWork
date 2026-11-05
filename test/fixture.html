@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>假 chat.deepseek.com（离线测试用）</title>
+  <style>
+    body { font: 14px/1.6 system-ui, sans-serif; margin: 24px; }
+    textarea { width: 480px; height: 60px; }
+    .ds-markdown { border: 1px solid #ddd; padding: 8px 12px; margin: 8px 0; white-space: pre-wrap; }
+    .ds-button { display: inline-block; border: 1px solid #888; padding: 2px 8px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <!--
+    离线替身：只模仿“输入框 + 回车发送 + 逐步流式出答案 + 生成中有停止按钮”这几个特征，
+    用来在没有登录态的情况下验证 src/ask.mjs 的时序与取值逻辑。
+    类名刻意用 DeepSeek 的 ds-markdown / 停止生成，好让选择器走同一条路径。
+  -->
+  <textarea placeholder="给 DeepSeek 发送消息"></textarea>
+  <div id="messages"></div>
+
+  <script>
+    const composer = document.querySelector('textarea')
+    const messages = document.getElementById('messages')
+
+    composer.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' || event.shiftKey) return
+      event.preventDefault()
+      const question = composer.value
+      composer.value = ''
+      answer(question)
+    })
+
+    function answer(question) {
+      const block = document.createElement('div')
+      block.className = 'ds-markdown'
+      messages.appendChild(block)
+
+      const stop = document.createElement('div')
+      stop.className = 'ds-button'
+      stop.setAttribute('role', 'button')
+      stop.textContent = '停止生成'
+      messages.appendChild(stop)
+
+      // 逐步追加，验证“文本稳定 + 无停止按钮”才算答完的判定。
+      const chunks = [
+        `${question.trim()} → `,
+        '网页端计算：',
+        '一加一',
+        '等于',
+        '2',
+        '。完毕。',
+      ]
+      let index = 0
+      const timer = setInterval(() => {
+        block.textContent += chunks[index]
+        index += 1
+        if (index >= chunks.length) {
+          clearInterval(timer)
+          stop.remove()
+          document.title = 'done'
+        }
+      }, 250)
+    }
+  </script>
+</body>
+</html>

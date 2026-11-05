@@ -1,0 +1,24 @@
+{
+  "name": "dsh-web-deepseek",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "让 DSH 的轻量问题走 chat.deepseek.com 网页端：一个 DSH 工具插件 + 命令行工具，零依赖",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek",
+    "plugin",
+    "cdp",
+    "browser-automation"
+  ],
+  "scripts": {
+    "test": "node test/ask.test.mjs",
+    "test:offline": "node test/ask.test.mjs",
+    "test:plugin": "node test/plugin.test.mjs",
+    "ask": "node src/cli.mjs"
+  }
+}
