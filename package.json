@@ -20,5 +20,11 @@
     "test:offline": "node test/ask.test.mjs",
     "test:plugin": "node test/plugin.test.mjs",
     "ask": "node src/cli.mjs"
+  },
+  "main": "src/plugin.js",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
   }
 }
