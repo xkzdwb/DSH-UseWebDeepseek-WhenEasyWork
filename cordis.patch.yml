@@ -1,0 +1,6 @@
+# dsh-web-deepseek — 让 DSH 的轻量问题走 chat.deepseek.com 网页端：一个 DSH 工具插件 + 命令行工具，零依赖
+# 这个文件由 dsh-market-sync 自动补：市场收录要求根目录有 cordis 标记。
+- insert:
+    - id: web-deepseek
+      name: 'dsh-web-deepseek'
+      config: {}
